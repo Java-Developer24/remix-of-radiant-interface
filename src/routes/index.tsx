@@ -22,7 +22,7 @@ function Home() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(/** @type {any} */(null));
+  const [selected, setSelected] = useState<any>(null);
 
   const openModal = (campaign) => {
     setSelected(campaign);
