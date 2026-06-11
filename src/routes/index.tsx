@@ -22,14 +22,26 @@ function Home() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(null);
 
-  const handleDiagnose = () => {
+  const openModal = (campaign) => {
+    setSelected(campaign);
+    setOpen(true);
+  };
+
+  const handleDiagnoseSearch = () => {
     const match =
       campaigns.find((c) => c.id === query.trim()) ||
       campaigns.find((c) => c.name.toLowerCase().includes(query.trim().toLowerCase()));
-    if (match) navigate({ to: "/campaign/$id", params: { id: match.id } });
-    else setOpen(true);
+    openModal(match || campaigns[0]);
   };
+
+  const runDiagnosis = () => {
+    if (!selected) return;
+    setOpen(false);
+    navigate({ to: "/diagnose/$id", params: { id: selected.id } });
+  };
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
