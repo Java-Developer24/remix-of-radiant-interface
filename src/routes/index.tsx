@@ -56,7 +56,7 @@ function Home() {
           className="relative overflow-hidden rounded-3xl border border-border p-10"
           style={{
             background:
-              "linear-gradient(135deg, oklch(0.96 0.01 255) 0%, oklch(0.97 0.008 255) 100%)",
+              "linear-gradient(135deg, oklch(0.97 0.04 55) 0%, oklch(0.95 0.07 35) 100%)",
           }}
         >
           <div
@@ -64,7 +64,7 @@ function Home() {
             className="pointer-events-none absolute -right-20 -top-24 h-[340px] w-[340px] rounded-full opacity-30"
             style={{
               background:
-                "radial-gradient(closest-side, oklch(0.40 0.08 255 / 0.35), transparent)",
+                "radial-gradient(closest-side, oklch(0.62 0.2 35 / 0.45), transparent)",
             }}
           />
           <div className="relative flex items-start gap-6">
@@ -93,7 +93,7 @@ function Home() {
                 />
                 <button
                   onClick={handleDiagnoseSearch}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground shadow-[0_8px_24px_-12px_oklch(0.28_0.06_255/0.7)] transition hover:opacity-95"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground shadow-[0_8px_24px_-12px_oklch(0.52_0.19_28/0.7)] transition hover:opacity-95"
                 >
                   <Sparkles className="h-4 w-4" />
                   Diagnose

@@ -85,7 +85,7 @@ function Detail() {
           className="relative mt-6 overflow-hidden rounded-3xl border border-border p-10"
           style={{
             background:
-              "linear-gradient(135deg, oklch(0.96 0.01 255) 0%, oklch(0.97 0.008 255) 100%)",
+              "linear-gradient(135deg, oklch(0.97 0.04 55) 0%, oklch(0.95 0.07 35) 100%)",
           }}
         >
           <div className="flex items-start gap-6">
@@ -323,7 +323,7 @@ function ConfidenceRow({ label, filled }) {
             <span
               key={i}
               className="h-2.5 w-2.5 rounded-[3px]"
-              style={{ background: i < filled ? "oklch(0.28 0.06 255)" : "oklch(0.88 0.01 255)" }}
+              style={{ background: i < filled ? "oklch(0.52 0.19 28)" : "oklch(0.9 0.018 55)" }}
             />
           ))}
         </div>
@@ -350,7 +350,7 @@ function Chips({ chips }) {
         <span
           key={c}
           className="rounded-md bg-primary/8 px-2.5 py-1 text-[12px] font-medium text-primary"
-          style={{ background: "oklch(0.28 0.06 255 / 0.08)" }}
+          style={{ background: "oklch(0.52 0.19 28 / 0.1)" }}
         >
           {c}
         </span>
@@ -360,8 +360,8 @@ function Chips({ chips }) {
 }
 
 function MetricTile({ label, value, vs, tone }) {
-  const bg = tone === "warn" ? "oklch(0.96 0.05 70)" : "oklch(0.95 0.04 255)";
-  const border = tone === "warn" ? "oklch(0.85 0.06 70)" : "oklch(0.82 0.06 255)";
+  const bg = tone === "warn" ? "oklch(0.96 0.05 70)" : "oklch(0.96 0.05 55)";
+  const border = tone === "warn" ? "oklch(0.85 0.06 70)" : "oklch(0.85 0.08 55)";
   return (
     <div
       className="rounded-xl border p-4"
