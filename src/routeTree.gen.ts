@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LandingRouteImport } from './routes/landing'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ObservationScheduleIdRouteImport } from './routes/observation-schedule.$id'
 import { Route as DiagnoseIdRouteImport } from './routes/diagnose.$id'
 import { Route as CampaignIdRouteImport } from './routes/campaign.$id'
 
@@ -28,6 +29,11 @@ const LandingRoute = LandingRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ObservationScheduleIdRoute = ObservationScheduleIdRouteImport.update({
+  id: '/observation-schedule/$id',
+  path: '/observation-schedule/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiagnoseIdRoute = DiagnoseIdRouteImport.update({
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/campaign/$id': typeof CampaignIdRoute
   '/diagnose/$id': typeof DiagnoseIdRoute
+  '/observation-schedule/$id': typeof ObservationScheduleIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/campaign/$id': typeof CampaignIdRoute
   '/diagnose/$id': typeof DiagnoseIdRoute
+  '/observation-schedule/$id': typeof ObservationScheduleIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,25 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/campaign/$id': typeof CampaignIdRoute
   '/diagnose/$id': typeof DiagnoseIdRoute
+  '/observation-schedule/$id': typeof ObservationScheduleIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/landing' | '/login' | '/campaign/$id' | '/diagnose/$id'
+  fullPaths:
+    | '/'
+    | '/landing'
+    | '/login'
+    | '/campaign/$id'
+    | '/diagnose/$id'
+    | '/observation-schedule/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/landing' | '/login' | '/campaign/$id' | '/diagnose/$id'
+  to:
+    | '/'
+    | '/landing'
+    | '/login'
+    | '/campaign/$id'
+    | '/diagnose/$id'
+    | '/observation-schedule/$id'
   id:
     | '__root__'
     | '/'
@@ -75,6 +96,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/campaign/$id'
     | '/diagnose/$id'
+    | '/observation-schedule/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +105,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   CampaignIdRoute: typeof CampaignIdRoute
   DiagnoseIdRoute: typeof DiagnoseIdRoute
+  ObservationScheduleIdRoute: typeof ObservationScheduleIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -108,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/observation-schedule/$id': {
+      id: '/observation-schedule/$id'
+      path: '/observation-schedule/$id'
+      fullPath: '/observation-schedule/$id'
+      preLoaderRoute: typeof ObservationScheduleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/diagnose/$id': {
       id: '/diagnose/$id'
       path: '/diagnose/$id'
@@ -131,7 +161,18 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   CampaignIdRoute: CampaignIdRoute,
   DiagnoseIdRoute: DiagnoseIdRoute,
+  ObservationScheduleIdRoute: ObservationScheduleIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

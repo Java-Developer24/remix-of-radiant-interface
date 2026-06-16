@@ -1,22 +1,28 @@
-export function ScoutMark({ size = 40 }) {
+export function ScoutMark({ size = 100 }) {
   return (
-    <div
-      className="flex items-center justify-center rounded-full"
+    <img
+      src="/ScoutInfo.png"
+      alt="Scout Logo"
       style={{
         width: size,
         height: size,
-        background:
-          "linear-gradient(135deg, oklch(0.68 0.2 55) 0%, oklch(0.48 0.21 25) 100%)",
-        boxShadow: "0 8px 24px -10px oklch(0.52 0.19 28 / 0.5)",
       }}
-    >
-      <svg viewBox="0 0 24 24" width={size * 0.5} height={size * 0.5} fill="none">
-        <path
-          d="M12 3 L13.2 9.5 L19.5 8 L14.5 12 L19 17 L12.5 14.8 L11 21 L9.2 14.8 L4 16.5 L8.5 12 L4.5 8 L10.5 9.5 Z"
-          fill="white"
-        />
-      </svg>
-    </div>
+      className="rounded-full object-contain"
+    />
+  );
+}
+
+export function ScoutIconMark({ size = 100 }) {
+  return (
+    <img
+      src="/scout-img.png"
+      alt="Scout Logo"
+      style={{
+        width: size,
+        height: size,
+      }}
+      className="rounded-full object-contain"
+    />
   );
 }
 

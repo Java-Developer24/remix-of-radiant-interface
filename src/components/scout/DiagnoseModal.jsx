@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Sparkles, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ScoutIconMark } from "./Logo";
 
 const SUGGESTIONS = [
   "Client OK with higher spend this month",
@@ -37,30 +38,25 @@ export function DiagnoseModal({ open, onClose, onSubmit, campaignName = "" }) {
           >
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-4">
-                <div
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.68 0.2 55) 0%, oklch(0.48 0.21 25) 100%)",
-                  }}
-                >
-                  <Sparkles className="h-5 w-5 text-white" strokeWidth={1.75} />
-                </div>
+                 <div  className="-ml-7  shrink-0">
+                    <ScoutIconMark/>
+                                  </div>
+               
                 <div>
-                  <div className="text-[11px] font-semibold tracking-[0.14em] text-primary">
+                  <div className="text-[11px] -ml-5 font-semibold tracking-[0.14em] text-primary">
                     DIAGNOSE {campaignName && `· ${campaignName.toUpperCase()}`}
                   </div>
-                  <h2 className="mt-1 font-display text-[26px] font-semibold tracking-tight text-foreground">
+                  <h2 className="mt-1 -ml-5 font-display text-[26px] font-semibold tracking-tight text-foreground">
                     Anything I should know first?
                   </h2>
-                  <p className="mt-2 max-w-md text-[14px] text-muted-foreground">
+                  <p className="mt-2 -ml-5 max-w-md text-[14px] text-muted-foreground">
                     Optional. A one-liner about client tolerances, recent calls, or a hunch tightens the diagnosis.
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="rounded-full p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                className="cursor-pointer rounded-full p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -79,7 +75,7 @@ export function DiagnoseModal({ open, onClose, onSubmit, campaignName = "" }) {
                 <button
                   key={s}
                   onClick={() => setNote((n) => (n ? `${n} ${s}` : s))}
-                  className="rounded-full border border-border bg-background px-4 py-1.5 text-[13px] text-foreground transition hover:border-primary/40 hover:bg-secondary"
+                  className="cursor-pointer rounded-full border border-border bg-background px-4 py-1.5 text-[13px] text-foreground transition hover:border-primary/40 hover:bg-secondary"
                 >
                   + {s}
                 </button>
@@ -93,13 +89,13 @@ export function DiagnoseModal({ open, onClose, onSubmit, campaignName = "" }) {
               <div className="flex items-center gap-3">
                 <button
                   onClick={onClose}
-                  className="rounded-full px-5 py-2.5 text-[14px] font-medium text-foreground transition hover:bg-secondary"
+                  className="cursor-pointer rounded-full px-5 py-2.5 text-[14px] font-medium text-foreground transition hover:bg-secondary"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => onSubmit?.(note)}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground shadow-[0_8px_24px_-12px_oklch(0.52_0.19_28/0.7)] transition hover:opacity-95"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground shadow-[0_8px_24px_-12px_oklch(0.52_0.19_28/0.7)] transition hover:opacity-95"
                 >
                   <Sparkles className="h-4 w-4" strokeWidth={2} />
                   Diagnose now

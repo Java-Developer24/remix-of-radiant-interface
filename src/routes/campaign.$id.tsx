@@ -20,6 +20,7 @@ import { useState } from "react";
 import { Header } from "../components/scout/Header";
 import { ScoutMark } from "../components/scout/Logo";
 import { DiagnoseModal } from "../components/scout/DiagnoseModal";
+import { Button } from "../components/ui/button";
 import { getCampaign } from "../data/campaigns";
 
 export const Route = createFileRoute("/campaign/$id")({
@@ -64,6 +65,13 @@ type Diag = {
   appliedTitle: string;
   appliedChange: React.ReactNode;
   appliedCopy: string;
+  historyTitle?: string;
+  history: Array<{
+    label: string;
+    title: string;
+    sub?: string;
+    ago: string;
+  }>;
 };
 
 const DIAGS: Record<string, Diag> = {
@@ -88,6 +96,10 @@ const DIAGS: Record<string, Diag> = {
     appliedChange: <>Logged a check-in. Scout will re-scan in 7 days.</>,
     appliedCopy:
       "Campaign is pacing well at $48 CPL against a $50 goal. No changes needed this cycle.",
+    history: [
+      { label: "KBAS", title: "Daily budget WPCID 12345", sub: "$38 → $40 · Routine", ago: "3d ago" },
+      { label: "XBAS", title: "Bid strategy refresh", ago: "6d ago" },
+    ],
   },
   "7720915": {
     kind: "investigate",
@@ -114,6 +126,10 @@ const DIAGS: Record<string, Diag> = {
     ),
     appliedCopy:
       "Investigated landing-page and tracking — checked conversion pixel, form submission, GA4 vs ad-platform parity, and recent LP changes.",
+    history: [
+      { label: "XBAS", title: "Bid strategy refresh", ago: "4d ago" },
+      { label: "You", title: "Added 5 negatives", ago: "12d ago" },
+    ],
   },
   "3140833": {
     kind: "actionable-pacing",
@@ -141,6 +157,12 @@ const DIAGS: Record<string, Diag> = {
     ),
     appliedCopy:
       "Reduced WPCID 12346 daily budget from $75 to $65 to bring cycle pacing in band. Watching at +1d, +3d, +7d.",
+    historyTitle: "KBAS already tried — but it only touched one publisher.",
+    history: [
+      { label: "KBAS", title: "Daily budget WPCID 12345", sub: "$40 → $33 · Auto-correct", ago: "2d ago" },
+      { label: "You", title: "Added negatives (3 keywords)", ago: "5d ago" },
+      { label: "KBAS", title: "Daily budget WPCID 12346", sub: "$70 → $75 · Auto", ago: "9d ago" },
+    ],
   },
   "4881204": {
     kind: "actionable-cpl",
@@ -169,6 +191,10 @@ const DIAGS: Record<string, Diag> = {
     ),
     appliedCopy:
       "Added phrase-match negatives -\"how to\", -\"cost\", -\"prices\" to suppress informational queries on broad-match terms.",
+    history: [
+      { label: "You", title: "Increased budget", sub: "$160/d → $175/d", ago: "1d ago" },
+      { label: "XBAS", title: "Bid strategy refresh", ago: "7d ago" },
+    ],
   },
   // Fallbacks
   "6620331": {
@@ -192,6 +218,10 @@ const DIAGS: Record<string, Diag> = {
     appliedChange: <>Logged for next client conversation. Scout will re-check in 5 days.</>,
     appliedCopy:
       "Non-brand impression share down to 61% from 78%. Flagged for client check-in.",
+    history: [
+      { label: "KBAS", title: "Daily budget WPCID 12345", sub: "$38 → $40 · Routine", ago: "3d ago" },
+      { label: "XBAS", title: "Bid strategy refresh", ago: "6d ago" },
+    ],
   },
   "9013477": {
     kind: "healthy",
@@ -214,6 +244,10 @@ const DIAGS: Record<string, Diag> = {
     appliedChange: <>Recorded the LP swap as the cause. Pattern will be suggested next time.</>,
     appliedCopy:
       "LP swap drove 2× conversions at a 32% lower CPL. Documented as a winning pattern.",
+    history: [
+      { label: "KBAS", title: "Daily budget WPCID 12345", sub: "$38 → $40 · Routine", ago: "3d ago" },
+      { label: "XBAS", title: "Bid strategy refresh", ago: "6d ago" },
+    ],
   },
 };
 
@@ -242,7 +276,7 @@ function Detail() {
           <div className="flex min-w-0 items-center gap-3">
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 font-semibold text-foreground transition hover:text-primary"
+              className="inline-flex cursor-pointer items-center gap-1.5 font-semibold text-foreground transition hover:text-primary"
             >
               <ArrowLeft className="h-4 w-4" /> Back to campaigns
             </Link>
@@ -280,9 +314,9 @@ function Detail() {
                 }}
               />
               <div className="relative grid grid-cols-1 gap-8 p-8 md:p-10 lg:grid-cols-[1fr_320px]">
-                <div className="flex items-start gap-5">
-                  <div className="shrink-0">
-                    <ScoutMark size={56} />
+                <div className="flex items-start">
+                  <div className="-ml-7 mr-3 shrink-0">
+                    <ScoutMark size={100} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
@@ -311,11 +345,11 @@ function Detail() {
                     <div className="mt-6 flex flex-wrap items-center gap-2">
                       <button
                         onClick={() => setOpen(true)}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-[13px] font-semibold text-background transition hover:bg-foreground/90"
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-[13px] font-semibold text-background transition hover:bg-foreground/90"
                       >
                         <RefreshCw className="h-3.5 w-3.5" /> Re-diagnose
                       </button>
-                      <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-[13px] font-semibold text-foreground transition hover:border-primary/40">
+                    <button className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-[13px] font-semibold text-foreground transition hover:border-primary/40">
                         <Copy className="h-3.5 w-3.5" /> Copy summary
                       </button>
                     </div>
@@ -424,11 +458,16 @@ function Detail() {
                     CHANGE HISTORY · LAST 14 DAYS
                   </div>
                   <h3 className="mt-1 font-display text-[18px] font-semibold">
-                    What changed before this signal.
+                    {diag.historyTitle ?? "What changed before this signal."}
                   </h3>
                   <ul className="mt-5 space-y-5">
-                    <ChangeItem label="KBAS" title="Daily budget WPCID 12345" sub="$38 → $40 · Routine" ago="3d ago" />
-                    <ChangeItem label="XBAS" title="Bid strategy refresh" sub="" ago="6d ago" />
+                    {diag.history.map((item, i) => (
+                      <ChangeItem
+                        key={i}
+                        {...item}
+                        isLast={i === diag.history.length - 1}
+                      />
+                    ))}
                   </ul>
                 </motion.div>
               </div>
@@ -527,11 +566,11 @@ function ActionPanel({
         <div className="mt-5 flex items-center gap-3">
           <button
             onClick={() => onApply("investigated")}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
           >
             <ExternalLink className="h-4 w-4" /> Take me there
           </button>
-          <button className="rounded-full px-4 py-2 text-[14px] font-medium text-muted-foreground hover:text-foreground">
+          <button className="cursor-pointer rounded-full px-4 py-2 text-[14px] font-medium text-muted-foreground hover:text-foreground">
             Not now
           </button>
         </div>
@@ -584,7 +623,7 @@ function ActionPanel({
         <div className="mt-5 flex items-center gap-4">
           <button
             onClick={() => onApply("applied")}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
           >
             <Check className="h-4 w-4" /> Apply this change
           </button>
@@ -592,7 +631,7 @@ function ActionPanel({
             You're tuning the amount above — that's your call.
           </span>
         </div>
-        <button className="mt-3 text-[13px] text-muted-foreground hover:text-foreground">Not now</button>
+        <button className="mt-3 cursor-pointer text-[13px] text-muted-foreground hover:text-foreground">Not now</button>
       </div>
     );
   }
@@ -628,11 +667,11 @@ function ActionPanel({
         <div className="mt-5 flex items-center gap-4">
           <button
             onClick={() => onApply("applied")}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
           >
             <Check className="h-4 w-4" /> Add negatives
           </button>
-          <button className="text-[14px] text-muted-foreground hover:text-foreground">
+          <button className="cursor-pointer text-[14px] text-muted-foreground hover:text-foreground">
             Not now
           </button>
         </div>
@@ -656,11 +695,11 @@ function ActionPanel({
       <div className="mt-5 flex items-center gap-3">
         <button
           onClick={() => onApply("ack")}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
+          className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14px] font-semibold text-primary-foreground transition hover:opacity-95"
         >
           <Check className="h-4 w-4" /> Acknowledge
         </button>
-        <Link to="/" className="text-[14px] text-muted-foreground hover:text-foreground">
+        <Link to="/" className="cursor-pointer text-[14px] text-muted-foreground hover:text-foreground">
           Back to campaigns
         </Link>
       </div>
@@ -811,13 +850,15 @@ function AppliedScreen({
               Open in Admin <ArrowRight className="h-4 w-4" />
             </a>
           ) : (
-            <button className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[13.5px] font-semibold text-primary-foreground transition hover:opacity-95">
-              See observation schedule <ArrowRight className="h-4 w-4" />
-            </button>
+            <Button asChild className="h-11 rounded-full px-5 text-[13.5px] font-semibold">
+              <Link to="/observation-schedule/$id" params={{ id: campaign.id }}>
+                See observation schedule <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           )}
           <button
             onClick={onReset}
-            className="text-[13px] text-muted-foreground hover:text-foreground"
+            className="cursor-pointer text-[13px] text-muted-foreground hover:text-foreground"
           >
             Undo
           </button>
@@ -1117,7 +1158,7 @@ function MetricTile({ label, value, vs, tone }: { label: string; value: string; 
   const bg = tone === "warn" ? "oklch(0.96 0.05 70)" : "oklch(0.96 0.05 55)";
   const border = tone === "warn" ? "oklch(0.85 0.06 70)" : "oklch(0.85 0.08 55)";
   return (
-    <div className="rounded-xl border p-4" style={{ background: bg, borderColor: border }}>
+    <div className="cursor-pointer rounded-xl border p-4 transition-colors hover:border-primary/40" style={{ background: bg, borderColor: border }}>
       <div className="text-[10.5px] font-semibold tracking-[0.14em] text-muted-foreground">{label}</div>
       <div className="mt-2 font-display text-[24px] font-semibold text-foreground">{value}</div>
       <div className="text-[12px] text-muted-foreground">{vs}</div>
@@ -1125,10 +1166,27 @@ function MetricTile({ label, value, vs, tone }: { label: string; value: string; 
   );
 }
 
-function ChangeItem({ label, title, sub, ago }: { label: string; title: string; sub: string; ago: string }) {
+function ChangeItem({
+  label,
+  title,
+  sub,
+  ago,
+  isLast,
+}: {
+  label: string;
+  title: string;
+  sub?: string;
+  ago: string;
+  isLast?: boolean;
+}) {
   return (
     <li className="flex items-start gap-3">
-      <span className="mt-1 h-2.5 w-2.5 rounded-full border-2 border-primary" />
+      <div className="relative flex shrink-0 flex-col items-center">
+        <span className="relative z-10 mt-1.5 h-2.5 w-2.5 rounded-full border-2 border-primary bg-card" />
+        {!isLast && (
+          <div className="absolute top-[11px] h-[calc(100%+1.25rem)] w-0.5 bg-primary/30" />
+        )}
+      </div>
       <div className="flex-1">
         <div className="flex items-baseline justify-between gap-2">
           <div className="text-[14px]">
@@ -1232,7 +1290,7 @@ function KeywordTable() {
       {rows.map((r) => (
         <div
           key={r.kw}
-          className={`grid grid-cols-[1.6fr_auto_auto_auto_auto] gap-x-3 border-b border-border py-2.5 text-[13px] last:border-b-0 ${
+          className={`grid cursor-pointer grid-cols-[1.6fr_auto_auto_auto_auto] gap-x-3 border-b border-border py-2.5 text-[13px] transition-colors hover:bg-muted last:border-b-0 ${
             r.bad ? "bg-[oklch(0.97_0.04_55)]" : ""
           }`}
         >

@@ -10,7 +10,7 @@ export function CampaignCard({ campaign, index = 0, onClick }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.05 * index, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="group block w-full rounded-2xl border border-border bg-card p-6 text-left transition-all hover:border-primary/40 hover:shadow-[0_12px_40px_-20px_rgba(20,23,31,0.25)]"
+      className="group block w-full cursor-pointer rounded-2xl border border-border bg-card p-6 text-left transition-all hover:border-primary/40 hover:shadow-[0_12px_40px_-20px_rgba(20,23,31,0.25)] focus:outline-none focus:ring-2 focus:ring-primary/20"
     >
       <div className="flex items-start justify-between">
         <div className="text-[13px] text-muted-foreground">

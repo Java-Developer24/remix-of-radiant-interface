@@ -1,62 +1,50 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Timer, Activity, CheckCircle2, AlertTriangle, Bell } from "lucide-react";
+import { Timer, Activity, CheckCircle2, AlertTriangle, Bell, LogOut } from "lucide-react";
 import { LocaliQLogo } from "./Logo";
 
 export function Header() {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   return (
     <header className="border-b border-border bg-background/80 backdrop-blur sticky top-0 z-30">
       <div className="mx-auto flex max-w-[1320px] items-center justify-between gap-6 px-8 py-4">
         <div className="flex items-center gap-5">
-          <Link to="/">
-            <LocaliQLogo />
+          <Link to="/" className="flex cursor-pointer items-center gap-2">
+              <img
+                  src="https://localiq.au/wp-content/uploads/2024/06/LiQ_Logo_icon.png"
+                  alt="LocaliQ"
+                  className="h-[28px] "
+                />
+              <span className="font-display text-[20px] font-semibold tracking-tight text-foreground">LocaliQ</span>
           </Link>
+
           <div className="h-6 w-px bg-border" />
           <div className="flex flex-col">
-            <span className="text-[13px] font-semibold leading-tight text-foreground">
+            <span className="text-[18px] font-semibold leading-tight text-foreground">
               Campaign Intelligence
             </span>
-            <span className="text-[11px] leading-tight text-muted-foreground">
-              Jordan Cole · Performance team
-            </span>
+            
           </div>
         </div>
         <div className="flex items-center gap-2.5">
-          <div className="hidden items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 md:flex">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
-            </span>
-            <span className="text-[12px] text-muted-foreground">
-              Live · data through <span className="font-semibold text-foreground">yesterday EOD</span>
-            </span>
-          </div>
-          <div className="hidden items-center gap-2 rounded-full bg-secondary px-3 py-1.5 lg:flex">
-            <Activity className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
-            <span className="text-[12px] text-muted-foreground">
-              <span className="font-semibold text-foreground">12</span> scored today
-            </span>
-          </div>
-          <div className="hidden items-center gap-2 rounded-full bg-[oklch(0.97_0.05_60)] px-3 py-1.5 text-[oklch(0.5_0.16_45)] lg:flex">
-            <AlertTriangle className="h-3.5 w-3.5" strokeWidth={2} />
-            <span className="text-[12px]">
-              <span className="font-semibold">3</span> need a look
-            </span>
-          </div>
-          <div className="flex items-center gap-2 rounded-full bg-secondary px-3 py-1.5">
-            <Timer className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
-            <span className="text-[12px] text-muted-foreground">
-              Reclaimed <span className="font-semibold text-primary">47m</span> today
-            </span>
-          </div>
-          <button
-            aria-label="Notifications"
-            className="relative grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground transition hover:text-foreground"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
-          </button>
-          <div className="grid h-9 w-9 place-items-center rounded-full bg-foreground text-[12px] font-semibold text-background">
-            JC
+          <div className="relative">
+            <button
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-foreground text-[12px] font-semibold text-background transition-transform hover:scale-105"
+            >
+              JC
+            </button>
+            {isProfileOpen && (
+              <div className="absolute right-0 mt-2 w-32 rounded-lg border border-border bg-card p-1 shadow-lg">
+                <Link
+                  to="/landing"
+                  className="flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                >
+                  <LogOut className="h-3.5 w-3.5" /> Logout
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

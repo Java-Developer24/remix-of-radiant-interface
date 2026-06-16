@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate, useParams, notFound } from "@tanstack/rea
 import { motion, AnimatePresence } from "framer-motion";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ScoutMark } from "../components/scout/Logo";
+import { ScoutIconMark, ScoutMark } from "../components/scout/Logo";
 import { Header } from "../components/scout/Header";
 import { getCampaign } from "../data/campaigns";
 
@@ -58,20 +58,20 @@ function Diagnosing() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
-      <main className="mx-auto flex max-w-[920px] flex-col items-center px-8 pt-16 pb-24">
+      <main className="mx-auto flex max-w-[920px] flex-col items-center px-8  pb-24">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          <ScoutMark size={72} />
+          <ScoutIconMark size={200} />
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.4 }}
-          className="mt-8 text-center font-display text-[42px] font-semibold tracking-tight"
+          className=" text-center font-display text-[42px] font-semibold tracking-tight"
         >
           Scout is on it.
         </motion.h1>
@@ -79,7 +79,7 @@ function Diagnosing() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.25, duration: 0.4 }}
-          className="mt-3 text-center text-[15px] text-muted-foreground"
+          className="text-center text-[15px] text-muted-foreground"
         >
           Assembling evidence on{" "}
           <span className="font-semibold text-foreground">{campaign?.name}</span>. This
@@ -90,7 +90,7 @@ function Diagnosing() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.5 }}
-          className="mt-12 w-full rounded-3xl border border-border bg-card p-8"
+          className="mt-6 w-full rounded-3xl border border-border bg-card p-8"
         >
           <div className="flex items-baseline justify-between">
             <span className="text-[14px] text-muted-foreground">

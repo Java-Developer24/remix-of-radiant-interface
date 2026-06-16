@@ -98,7 +98,7 @@ function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-           <div className="mt-5 grid grid-cols-1 items-end gap-6 lg:grid-cols-[1.5fr_1fr]">
+           <div className=" grid grid-cols-1 items-end gap-6 lg:grid-cols-[1.5fr_1fr]">
             <h1 className="font-display text-[clamp(40px,6vw,72px)] font-semibold leading-[0.98] tracking-tight">
               <span className="block text-muted-foreground/70">Good morning,</span>
               <span className="relative inline-block">
@@ -179,10 +179,10 @@ function Home() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className="font-display text-[22px] font-semibold tracking-tight">
-                  Your book — {filtered.length} of {baseCampaigns.length}
+                  A few campaigns you might want to look at
                 </h2>
                 <p className="mt-1 text-[13px] text-muted-foreground">
-                  Sorted by how long since you last touched them. Treat this as a glance, not a queue.
+                 Ordered by how long since each was last touched not by severity. Scout is still learning how you prioritize, so treat these as a glance, not a queue. You always know what's worth your time.
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -451,12 +451,7 @@ function Home() {
         </section>
       </main>
 
-      <div className="fixed bottom-5 left-5 z-20">
-        <div className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-[12px] font-medium text-background shadow-lg">
-          <Database className="h-3.5 w-3.5 text-warning" />
-          Mock API · 10 endpoints
-        </div>
-      </div>
+      
 
       <DiagnoseModal
         open={open}
